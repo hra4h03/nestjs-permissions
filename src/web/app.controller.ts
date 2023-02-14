@@ -1,12 +1,19 @@
-import { Controller, Get, ParseIntPipe, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  ParseIntPipe,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { Client, ClientProxy, Transport } from '@nestjs/microservices';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { ApiController } from './base.controller';
-import { UsePoliciesGuard } from './common/guards/PoliciesGuard';
+import { PoliciesGuard } from './common/guards/PoliciesGuard';
 import { Config } from '@/web/common/config/config';
+import { JwtGuard } from '@/auth/guards/JwtGuard';
 
 @Controller('/hero-game')
-@UsePoliciesGuard()
+@UseGuards(JwtGuard, PoliciesGuard)
 export class AppController extends ApiController {
   @Client({
     transport: Transport.REDIS,

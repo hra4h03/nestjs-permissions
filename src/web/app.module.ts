@@ -19,6 +19,8 @@ import { CommonModule } from './common/common.module';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { TracingMiddleware } from './common/middlewares/trace.middleware';
 import { HeroGameModule } from './modules/hero-game/hero-game.module';
+import { AuthModule } from '@/auth/auth.module';
+import { User } from '@aggregates/user/user.aggregate';
 
 const providers: Provider[] = [
   {
@@ -50,6 +52,8 @@ const providers: Provider[] = [
     // PrometheusModule.register(),
     MikroOrmModule.forRoot(),
     CommonModule,
+    MikroOrmModule.forFeature([User]),
+    AuthModule,
     HeroGameModule,
   ],
   providers: providers,
@@ -59,7 +63,7 @@ export class AppModule implements NestModule, OnModuleInit {
   constructor(private readonly orm: MikroORM) {}
 
   async onModuleInit(): Promise<void> {
-    // await this.orm.getMigrator().up();
+    await this.orm.getMigrator().up();
   }
 
   // for some reason the auth middlewares in profile.ts and article modules are fired before the request context one,
