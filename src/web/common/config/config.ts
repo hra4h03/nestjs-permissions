@@ -1,10 +1,7 @@
 import * as dotenv from 'dotenv';
 
 dotenv.config({
-  path:
-    process.env.NODE_ENV === 'production'
-      ? '.env.production'
-      : '.env.development',
+  path: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
 });
 
 export const Config = {
@@ -14,7 +11,7 @@ export const Config = {
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || 5432,
     username: process.env.DB_USERNAME || 'postgres',
-    password: process.env.DB_USERNAME || 'P@ssw0rd',
+    password: process.env.DB_PASSWORD || 'P@ssw0rd',
     dbName: process.env.DB_DATABASE || 'nestjs_build',
   },
   jwt: {

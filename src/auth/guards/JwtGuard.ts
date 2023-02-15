@@ -59,4 +59,12 @@ export class JwtGuard implements CanActivate {
   }
 }
 
+@Injectable()
+export class WsJwtGuard extends JwtGuard {
+  protected getRequest<T>(context: ExecutionContext): T {
+    return context.switchToWs().getClient().handshake;
+  }
+}
+
 export const UseJwtAuthGuard = () => UseGuards(JwtGuard);
+export const UseWsJwtAuthGuard = () => UseGuards(WsJwtGuard);
