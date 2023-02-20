@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from '@/auth/auth.service';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
-import { Signup } from '@/auth/dtos/signup.dto';
 import { Login } from '@/auth/dtos/login.dto';
-import { RequestWithUser, UseJwtAuthGuard } from '@/auth/guards/JwtGuard';
+import { Signup } from '@/auth/dtos/signup.dto';
 import { CurrentUser } from '@/auth/guards/CurrentUser';
+import { RequestWithUser, UseJwtAuthGuard } from '@/auth/guards/JwtGuard';
+import { Serialize } from '@/web/common/interceptors/serialize.interceptor';
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { GetUserDto } from '../web/dtos/user/user.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -24,6 +26,8 @@ export class AuthController {
   }
 
   @UseJwtAuthGuard()
+  @Serialize(GetUserDto)
+  @ApiOkResponse({ type: GetUserDto })
   @Get('me')
   public me(@CurrentUser() user: RequestWithUser['user']) {
     return user;

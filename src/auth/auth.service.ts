@@ -1,14 +1,14 @@
-import { Get, Injectable, Post } from '@nestjs/common';
+import { Login } from '@/auth/dtos/login.dto';
 import { Signup } from '@/auth/dtos/signup.dto';
-import { JwtService } from '@nestjs/jwt';
-import { EntityRepository } from '@mikro-orm/postgresql';
+import { UserAlreadyExistsError } from '@/auth/errors/UserAlreadyExists.error';
+import { UsernameOrPasswordIsNotCorrect } from '@/auth/errors/UsernameOrPasswordIsNotCorrect.error';
+import { Role } from '@aggregates/user/role/role';
 import { User } from '@aggregates/user/user.aggregate';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { UserAlreadyExistsError } from '@/auth/errors/UserAlreadyExists.error';
-import { Role } from '@aggregates/user/role/role';
-import { Login } from '@/auth/dtos/login.dto';
+import { EntityRepository } from '@mikro-orm/postgresql';
+import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { UsernameOrPasswordIsNotCorrect } from '@/auth/errors/UsernameOrPasswordIsNotCorrect.error';
 
 @Injectable()
 export class AuthService {

@@ -30,7 +30,7 @@ async function bootstrap() {
   // );
 
   const options = new DocumentBuilder()
-    .setTitle('NestJS Realworld Example App')
+    .setTitle('NestJS Permission boilerplate')
     .setDescription('The Realworld API description')
     .setVersion('1.0')
     .addBearerAuth()
