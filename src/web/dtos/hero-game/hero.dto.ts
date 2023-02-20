@@ -1,24 +1,32 @@
-import { EntityDTO, Loaded } from '@mikro-orm/core';
 import { ApiProperty } from '@nestjs/swagger';
-
-import { Dragon } from '@aggregates/dragon/dragon.aggregate';
-import { Hero } from '@aggregates/hero/hero.aggregate';
 import { GetDragonDto } from './dragon.dto';
+import { Expose, Type } from 'class-transformer';
 
 export class GetHeroResponseDto {
   @ApiProperty({ type: Number })
+  @Expose()
   public id: number;
 
   @ApiProperty({ type: String })
+  @Expose()
   public name: string;
 
   @ApiProperty({ type: Number })
+  @Expose()
   public skill: number;
 
-  @ApiProperty({ type: Dragon, isArray: true })
+  @ApiProperty({ type: () => GetDragonDto, isArray: true })
+  @Type(() => GetDragonDto)
+  @Expose()
   public killedDragons: GetDragonDto[];
+}
 
-  constructor(object: EntityDTO<Loaded<Hero, never>>) {
-    Object.assign(this, object);
-  }
+export class GetMinHeroResponseDto {
+  @ApiProperty({ type: Number })
+  @Expose()
+  public id: number;
+
+  @ApiProperty({ type: String })
+  @Expose()
+  public name: string;
 }

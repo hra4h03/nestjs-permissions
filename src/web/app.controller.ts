@@ -15,7 +15,7 @@ import { JwtGuard } from '@/auth/guards/JwtGuard';
 
 @Controller('/hero-game')
 @UseGuards(JwtGuard, PoliciesGuard)
-export class AppController extends ApiController implements OnModuleInit {
+export class AppController extends ApiController {
   @Client({
     transport: Transport.REDIS,
     options: {
@@ -33,9 +33,5 @@ export class AppController extends ApiController implements OnModuleInit {
       'sum',
       Array.from({ length: sum }, (_, i) => i + 1),
     );
-  }
-
-  async onModuleInit() {
-    await this.client.connect();
   }
 }

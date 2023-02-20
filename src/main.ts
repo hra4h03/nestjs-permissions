@@ -17,17 +17,17 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ZodValidationPipe());
 
-  app.connectMicroservice(
-    {
-      transport: Transport.REDIS,
-      options: {
-        host: Config.redis.host,
-        port: Config.redis.port,
-        password: Config.redis.password,
-      },
-    },
-    { inheritAppConfig: true },
-  );
+  // app.connectMicroservice(
+  //   {
+  //     transport: Transport.REDIS,
+  //     options: {
+  //       host: Config.redis.host,
+  //       port: Config.redis.port,
+  //       password: Config.redis.password,
+  //     },
+  //   },
+  //   { inheritAppConfig: true },
+  // );
 
   const options = new DocumentBuilder()
     .setTitle('NestJS Realworld Example App')
@@ -38,7 +38,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('/swagger', app, document);
 
-  await app.startAllMicroservices();
+  // await app.startAllMicroservices();
   await app.listen(Config.port, () => {
     logger.log(
       'Up & running at http://localhost:3000',

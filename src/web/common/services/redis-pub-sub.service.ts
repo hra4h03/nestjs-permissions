@@ -26,7 +26,5 @@ export class RedisPubSubService implements OnModuleInit {
       port: Config.redis.port,
       password: Config.redis.password,
     });
-    // await this.pub.connect();
-    // await this.sub.connect();
   }
 }

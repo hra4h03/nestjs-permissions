@@ -11,8 +11,6 @@ import {
 import { ConfigModule } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerModule } from 'nestjs-pino';
-import { AutomapperModule } from '@automapper/nestjs';
-import { classes } from '@automapper/classes';
 
 import { AppController } from './app.controller';
 import { CommonModule } from './common/common.module';
@@ -45,9 +43,6 @@ const providers: Provider[] = [
           },
         },
       },
-    }),
-    AutomapperModule.forRoot({
-      strategyInitializer: classes(),
     }),
     // PrometheusModule.register(),
     MikroOrmModule.forRoot(),

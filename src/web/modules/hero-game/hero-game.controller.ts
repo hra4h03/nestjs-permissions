@@ -1,28 +1,30 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiBody, ApiOkResponse } from '@nestjs/swagger';
 import { GetHeroResponseDto } from '@/web/dtos/hero-game/hero.dto';
 import { GetDragonDto } from '@/web/dtos/hero-game/dragon.dto';
 import { HeroGameService } from '@/web/modules/hero-game/hero-game.service';
 import { KillDragonRequest } from '@/web/dtos/hero-game/kill-dragon.request.dto';
 import { CreateDragon } from '@/web/dtos/hero-game/dragon/create.dragon';
-import { JwtGuard, RequestWithUser } from '@/auth/guards/JwtGuard';
+import { RequestWithUser } from '@/auth/guards/JwtGuard';
 import { CurrentUser } from '@/auth/guards/CurrentUser';
 import { CheckPolicies } from '@/web/common/guards/PoliciesMetadata';
-import { PoliciesGuard } from '@/web/common/guards/PoliciesGuard';
+import { Serialize } from '@/web/common/interceptors/serialize.interceptor';
 
-@UseGuards(JwtGuard, PoliciesGuard)
+// @UseGuards(JwtGuard, PoliciesGuard)
 @Controller('hero-game')
 export class HeroGameController {
   constructor(private readonly heroGameService: HeroGameService) {}
 
   @Get('/heroes')
+  @Serialize(GetHeroResponseDto)
   @ApiOkResponse({ type: [GetHeroResponseDto] })
-  async getHeroes() {
+  getHeroes() {
     return this.heroGameService.getHeroes();
   }
 
   @Get('/dragons')
   @ApiOkResponse({ type: [GetDragonDto] })
+  @Serialize(GetDragonDto)
   @CheckPolicies((ability) => ability.can('read', 'dragon'))
   getDragons(@CurrentUser() user: RequestWithUser['user']) {
     return this.heroGameService.getDragons();
@@ -31,8 +33,9 @@ export class HeroGameController {
   @Post('/create-dragon')
   @ApiBody({ schema: CreateDragon.OpenApi })
   @ApiOkResponse({ type: GetDragonDto })
+  @Serialize(GetDragonDto)
   createDragon(@Body() createDragonDto: CreateDragon.Dto) {
-    return this.heroGameService.createDragon(createDragonDto).pipe();
+    return this.heroGameService.createDragon(createDragonDto);
   }
 
   @Post('/kill-dragon')

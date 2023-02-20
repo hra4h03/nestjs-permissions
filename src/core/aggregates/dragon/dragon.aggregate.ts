@@ -11,6 +11,7 @@ import {
 import { DragonAlreadyDeadException } from '../../errors/DragonAlreadyDead.exception';
 import { Auditable, Writeable } from '../../primitives/base.entity';
 import { Hero } from '../hero/hero.aggregate';
+import { Transform } from 'class-transformer';
 
 export enum DragonStatus {
   ALIVE,
@@ -45,6 +46,7 @@ export class Dragon extends BaseEntity<Dragon, 'id'> {
     eager: false,
     nullable: true,
   })
+  @Transform(({ value }) => value.toArray())
   public readonly killedBy?: Hero;
 
   public die(this: Writeable<Dragon>) {
