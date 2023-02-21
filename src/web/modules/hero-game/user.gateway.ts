@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, OnModuleDestroy } from '@nestjs/common';
 import {
   OnGatewayConnection,
   SubscribeMessage,
@@ -7,33 +7,35 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-import { GetDragonDto } from '../../dtos/hero-game/dragon.dto';
-import { RedisPubSubService } from '@/web/common/services/redis-pub-sub.service';
 import { UseWsJwtAuthGuard } from '@/auth/guards/JwtGuard';
+import { RedisPubSubService } from '@/web/common/services/redis-pub-sub.service';
 import { User } from '@aggregates/user/user.aggregate';
 
 @WebSocketGateway({ transport: ['websocket'] })
 @UseWsJwtAuthGuard()
-export class UserGateway implements OnGatewayConnection {
+export class UserGateway implements OnGatewayConnection, OnModuleDestroy {
   @WebSocketServer()
   public server: Server;
   private readonly logger = new Logger(UserGateway.name);
 
   constructor(private readonly redisPubSubService: RedisPubSubService) {}
 
-  @SubscribeMessage('friend-location-changes')
+  @SubscribeMessage('friend_location_changes')
   public async subscribeToFriendLocationChanges(client: Socket, payload: any) {
     const user: User = (client?.handshake as any)?.user;
     this.logger.log(
-      `Client subscribed to friend-location-changes: ${client.id}, ${payload}, ${user?.id}`,
+      `Client subscribed to friend-location-changes: ${client.id}, ${payload}, ${user}`,
     );
     const friendIds = [1, 2, 3]; // temporary
 
     const redisSub = this.redisPubSubService.getSub();
-    redisSub.subscribe(...friendIds.map((id) => `user.${id}`), (err, count) => {
-      if (err) this.logger.error(err);
-      this.logger.log(`Subscribed to ${count} channels`);
-    });
+    redisSub.subscribe(
+      ...friendIds.map((id) => `user.${id}`),
+      (err: Error, count) => {
+        if (err) this.logger.error(err);
+        this.logger.log(`Subscribed to ${count} channels`);
+      },
+    );
 
     redisSub.on('message', (channel: string, message) => {
       this.logger.log(`Received message from ${channel}: ${message}`);
@@ -45,7 +47,8 @@ export class UserGateway implements OnGatewayConnection {
     this.logger.log(`Client connected: ${client.id}, ${args}`);
   }
 
-  onDragonKilled(dragon: GetDragonDto) {
-    this.server.emit('dragon-killed', dragon);
+  public onModuleDestroy() {
+    const redisSub = this.redisPubSubService.getSub();
+    redisSub.unsubscribe();
   }
 }

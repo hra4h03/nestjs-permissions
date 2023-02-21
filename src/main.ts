@@ -5,7 +5,6 @@ import { Logger } from 'nestjs-pino';
 import { AppModule } from './web/app.module';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { Config } from '@/web/common/config/config';
-import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

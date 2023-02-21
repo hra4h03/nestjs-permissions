@@ -39,6 +39,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   ioredis: ^5.3.0
   jest: 28.1.2
+  kafkajs: ^2.2.3
   lodash: ^4.17.21
   nestjs-pino: ^3.1.2
   nestjs-zod: ^1.2.1
@@ -72,7 +73,7 @@ dependencies:
   '@nestjs/config': 2.3.0_faw27zmqjaamnhwhsycb5q3sc4
   '@nestjs/core': 9.3.2_cap7qabjzko3dghqntnib2oddu
   '@nestjs/jwt': 10.0.2_@nestjs+common@9.3.2
-  '@nestjs/microservices': 9.3.2_y6v34mnt55vfotcicdky72ihzq
+  '@nestjs/microservices': 9.3.2_noaqkzzkkxfr6nqbphzm3vh47e
   '@nestjs/platform-express': 9.3.2_fnnujyxcjtinmcbby3pisnawpe
   '@nestjs/platform-socket.io': 9.3.2_flzoav32wrhvfodqhuwpf4odea
   '@nestjs/swagger': 6.1.4_phpbjpaagmnbtisrmnx2a4kgbm
@@ -81,6 +82,7 @@ dependencies:
   class-transformer: 0.5.1
   dotenv: 16.0.3
   ioredis: 5.3.0
+  kafkajs: 2.2.3
   lodash: 4.17.21
   nestjs-pino: 3.1.2_5vjfriqguuqhcd7kscb6tdorkq
   nestjs-zod: 1.2.1_g3zfjhi66wwlkxi3l4mj5ql5ju
@@ -1288,7 +1290,7 @@ packages:
         optional: true
     dependencies:
       '@nestjs/common': 9.3.2_ew7gazwbjf4vlpfvmmn4v2vvei
-      '@nestjs/microservices': 9.3.2_y6v34mnt55vfotcicdky72ihzq
+      '@nestjs/microservices': 9.3.2_noaqkzzkkxfr6nqbphzm3vh47e
       '@nestjs/platform-express': 9.3.2_fnnujyxcjtinmcbby3pisnawpe
       '@nestjs/websockets': 9.3.2_ehq7mdzfh6ocnvfa4viazclqa4
       '@nuxtjs/opencollective': 0.3.2
@@ -1331,7 +1333,7 @@ packages:
       reflect-metadata: 0.1.13
     dev: false
 
-  /@nestjs/microservices/9.3.2_y6v34mnt55vfotcicdky72ihzq:
+  /@nestjs/microservices/9.3.2_noaqkzzkkxfr6nqbphzm3vh47e:
     resolution: {integrity: sha512-htpBU0XBJ+MSPbcSmV64413vILE0GrLH5cNtE6rwoYzX+MmZHPe1ZWPVIntVaxadx/3GwtBNbrC7Qd7UkxlnJw==}
     peerDependencies:
       '@grpc/grpc-js': '*'
@@ -1372,6 +1374,7 @@ packages:
       '@nestjs/websockets': 9.3.2_ehq7mdzfh6ocnvfa4viazclqa4
       ioredis: 5.3.0
       iterare: 1.2.1
+      kafkajs: 2.2.3
       reflect-metadata: 0.1.13
       rxjs: 7.8.0
       tslib: 2.5.0
@@ -1482,7 +1485,7 @@ packages:
     dependencies:
       '@nestjs/common': 9.3.2_ew7gazwbjf4vlpfvmmn4v2vvei
       '@nestjs/core': 9.3.2_cap7qabjzko3dghqntnib2oddu
-      '@nestjs/microservices': 9.3.2_y6v34mnt55vfotcicdky72ihzq
+      '@nestjs/microservices': 9.3.2_noaqkzzkkxfr6nqbphzm3vh47e
       '@nestjs/platform-express': 9.3.2_fnnujyxcjtinmcbby3pisnawpe
       tslib: 2.5.0
     dev: true
@@ -4445,6 +4448,10 @@ packages:
       jwa: 1.4.1
       safe-buffer: 5.2.1
     dev: false
+
+  /kafkajs/2.2.3:
+    resolution: {integrity: sha512-JmzIiLHE/TdQ7b4I2B/DNMtfhTh66fmEaEg7gGkyQXBC6f1A7I2jSjeUsVIJfC8d9YcEIURyBjtOEKBO5OHVhg==}
+    engines: {node: '>=14.0.0'}
 
   /kind-of/2.0.1:
     resolution: {integrity: sha512-0u8i1NZ/mg0b+W3MGGw5I7+6Eib2nx72S/QvXa0hYjEkjTknYmEYQJwGu3mLC0BrhtJjtQafTkyRUQ75Kx0LVg==}

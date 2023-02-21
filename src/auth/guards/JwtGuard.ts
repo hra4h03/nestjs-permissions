@@ -25,6 +25,7 @@ export class JwtGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const request = this.getRequest<RequestWithUser>(context);
+    console.log('request', request);
 
     try {
       const token = this.getToken(request);

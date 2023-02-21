@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  OnModuleInit,
   ParseIntPipe,
   Query,
   UseGuards,
