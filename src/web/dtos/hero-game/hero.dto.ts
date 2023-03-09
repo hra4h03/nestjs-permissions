@@ -29,4 +29,8 @@ export class GetMinHeroResponseDto {
   @ApiProperty({ type: String })
   @Expose()
   public name: string;
+
+  @ApiProperty({ type: Number })
+  @Expose()
+  public skill: number;
 }

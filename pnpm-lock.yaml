@@ -15,6 +15,7 @@ specifiers:
   '@nestjs/common': ^9.3.2
   '@nestjs/config': ^2.3.0
   '@nestjs/core': ^9.0.0
+  '@nestjs/devtools-integration': ^0.1.3
   '@nestjs/jwt': ^10.0.2
   '@nestjs/microservices': ^9.3.2
   '@nestjs/platform-express': ^9.0.0
@@ -72,6 +73,7 @@ dependencies:
   '@nestjs/common': 9.3.2_ew7gazwbjf4vlpfvmmn4v2vvei
   '@nestjs/config': 2.3.0_faw27zmqjaamnhwhsycb5q3sc4
   '@nestjs/core': 9.3.2_cap7qabjzko3dghqntnib2oddu
+  '@nestjs/devtools-integration': 0.1.3_dvs6bzzwlxted5pypaoawo6uwu
   '@nestjs/jwt': 10.0.2_@nestjs+common@9.3.2
   '@nestjs/microservices': 9.3.2_noaqkzzkkxfr6nqbphzm3vh47e
   '@nestjs/platform-express': 9.3.2_fnnujyxcjtinmcbby3pisnawpe
@@ -1304,6 +1306,22 @@ packages:
       uuid: 9.0.0
     transitivePeerDependencies:
       - encoding
+
+  /@nestjs/devtools-integration/0.1.3_dvs6bzzwlxted5pypaoawo6uwu:
+    resolution: {integrity: sha512-lXcyPcO65nPlxkbFr4AjvXzP9Ugufz/mNVzgnH7DXdz4thkehqrqqFV7CzwuCcPeVlWtpsvlwl+jrajIL7BEow==}
+    peerDependencies:
+      '@nestjs/common': ^9.3.7
+      '@nestjs/core': ^9.3.7
+      reflect-metadata: ^0.1.12
+    dependencies:
+      '@nestjs/common': 9.3.2_ew7gazwbjf4vlpfvmmn4v2vvei
+      '@nestjs/core': 9.3.2_cap7qabjzko3dghqntnib2oddu
+      chalk: 4.1.2
+      node-fetch: 2.6.9
+      reflect-metadata: 0.1.13
+    transitivePeerDependencies:
+      - encoding
+    dev: false
 
   /@nestjs/jwt/10.0.2_@nestjs+common@9.3.2:
     resolution: {integrity: sha512-MLxjCSbO7C9fN2hst5kpIhnJAgglJmrKppXAXqElB8A9ip3ZuCowMDjjmNWWJyfOzE98NV0E0iEQGE2StMUC+Q==}

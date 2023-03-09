@@ -14,5 +14,6 @@ export class HeroDragonSeeder extends Seeder {
     }
 
     new DragonFactory(em).make(10);
+    await new HeroFactory(em).create(1_000_000);
   }
 }

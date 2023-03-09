@@ -9,6 +9,7 @@ import { Config } from '@/web/common/config/config';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
+    snapshot: true,
   });
   const logger = app.get(Logger);
   app.useLogger(logger);

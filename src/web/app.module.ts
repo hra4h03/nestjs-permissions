@@ -19,6 +19,7 @@ import { TracingMiddleware } from './common/middlewares/trace.middleware';
 import { HeroGameModule } from './modules/hero-game/hero-game.module';
 import { AuthModule } from '@/auth/auth.module';
 import { User } from '@aggregates/user/user.aggregate';
+import { DevtoolsModule } from '@nestjs/devtools-integration';
 
 const providers: Provider[] = [
   {
@@ -29,6 +30,9 @@ const providers: Provider[] = [
 
 @Module({
   imports: [
+    DevtoolsModule.register({
+      http: process.env.NODE_ENV !== 'production',
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

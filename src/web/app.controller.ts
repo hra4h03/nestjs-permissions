@@ -1,36 +1,36 @@
-import {
-  Controller,
-  Get,
-  ParseIntPipe,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
-import { Client, ClientProxy, Transport } from '@nestjs/microservices';
+import { Controller, Get, ParseIntPipe, Query } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { ApiController } from './base.controller';
-import { PoliciesGuard } from './common/guards/PoliciesGuard';
-import { Config } from '@/web/common/config/config';
-import { JwtGuard } from '@/auth/guards/JwtGuard';
+import { KafkaService } from '@/web/common/services/kafka.service';
+import { RedisPubSubClient } from '@/web/common/redis/redis-client';
 
 @Controller('/hero-game')
-@UseGuards(JwtGuard, PoliciesGuard)
+// @UseGuards(JwtGuard, PoliciesGuard)
 export class AppController extends ApiController {
-  @Client({
-    transport: Transport.REDIS,
-    options: {
-      host: Config.redis.host,
-      port: Config.redis.port,
-      password: Config.redis.password,
-    },
-  })
+  @RedisPubSubClient()
   public client: ClientProxy;
 
-  @Get('/sum')
+  constructor(private readonly kafkaService: KafkaService) {
+    super();
+  }
+
+  @Get('/sum-redis')
   @ApiOkResponse({ type: Number })
-  sum(@Query('sum', ParseIntPipe) sum: number) {
+  sumRedis(@Query('sum', ParseIntPipe) sum: number) {
     return this.client.send<number>(
       'sum',
       Array.from({ length: sum }, (_, i) => i + 1),
     );
+  }
+
+  @Get('/sum-kafka')
+  @ApiOkResponse({ type: Number })
+  sumKafka(@Query('sum', ParseIntPipe) sum: number) {
+    const array = new Int32Array(sum).map((x, i) => i + 1).toString();
+    return this.kafkaService.getProducer().send({
+      topic: 'topic-1',
+      messages: [{ value: array }],
+    });
   }
 }

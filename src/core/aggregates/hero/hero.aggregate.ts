@@ -39,7 +39,9 @@ export class Hero extends BaseEntity<Hero, 'id'> {
   @Embedded(() => Auditable, { prefix: false })
   public readonly auditable: Auditable;
 
-  @OneToMany(() => Dragon, (dragon) => dragon.killedBy)
+  @OneToMany(() => Dragon, (dragon) => dragon.killedBy, {
+    serializer: (dragon) => dragon.toArray(),
+  })
   public readonly killedDragons = new Collection<Dragon>(this);
 
   @Property()

@@ -8,7 +8,7 @@ export class HeroFactory extends Factory<Hero> {
 
   public definition(faker: Faker): Partial<Hero> {
     return {
-      name: faker.name.firstName(),
+      name: `${faker.name.firstName()} ${faker.name.lastName()} ${Math.random().toString()}`,
       skill: Number(faker.random.numeric(2)),
       auditable: new Auditable({
         createdAt: faker.date.past(),
