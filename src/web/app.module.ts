@@ -20,6 +20,7 @@ import { HeroGameModule } from './modules/hero-game/hero-game.module';
 import { AuthModule } from '@/auth/auth.module';
 import { User } from '@aggregates/user/user.aggregate';
 import { DevtoolsModule } from '@nestjs/devtools-integration';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 const providers: Provider[] = [
   {
@@ -37,6 +38,7 @@ const providers: Provider[] = [
       isGlobal: true,
       envFilePath: '.env',
     }),
+    EventEmitterModule.forRoot(),
     LoggerModule.forRoot({
       pinoHttp: {
         autoLogging: false,

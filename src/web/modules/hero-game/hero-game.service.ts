@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Dragon } from '@aggregates/dragon/dragon.aggregate';
 import { EntityRepository } from '@mikro-orm/postgresql';
-import { forkJoin, from, map, mergeMap, zip } from 'rxjs';
+import { forkJoin, from, map, mergeMap, tap, zip } from 'rxjs';
 import { Hero } from '@aggregates/hero/hero.aggregate';
 import { CreateDragon } from '@/web/dtos/hero-game/dragon/create.dragon';
 import { RedisSortedSetService } from '@/web/common/services/redis-sorted-set.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { KafkaService } from '@/web/common/services/kafka.service';
 
 @Injectable()
 export class HeroGameService {
@@ -15,6 +17,7 @@ export class HeroGameService {
     @InjectRepository(Hero)
     private readonly heroRepository: EntityRepository<Hero>,
     private readonly redisSortedSetService: RedisSortedSetService,
+    private readonly kafkaService: KafkaService,
   ) {}
 
   public getDragons() {
@@ -70,6 +73,7 @@ export class HeroGameService {
           from(this.heroRepository.flush()),
         );
       }),
+      tap(async () => await this.publishDragonKilledEvent(heroId, dragonId)),
       map(() => true),
     );
   }
@@ -79,5 +83,13 @@ export class HeroGameService {
     return from(this.dragonRepository.persistAndFlush(dragon)).pipe(
       map(() => dragon),
     );
+  }
+
+  private async publishDragonKilledEvent(heroId: number, dragonId: number) {
+    const producer = this.kafkaService.getProducer();
+    await producer.send({
+      topic: 'hero-game',
+      messages: [{ value: new Uint16Array([heroId, dragonId]).toString() }],
+    });
   }
 }

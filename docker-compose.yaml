@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # image: hra4h03/nestjs-build
+    container_name: nestjs-build
+    restart: unless-stopped
+    environment:
+      - PORT=5301
+      - REDIS_PASSWORD=eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      - REDIS_HOST=redis
+    ports:
+      - 3000:3000
+    networks:
+      - local-network
+
+networks:
+  local-network:
+    name: local-network
+    external: true
