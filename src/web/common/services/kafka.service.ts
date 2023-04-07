@@ -1,3 +1,4 @@
+import { Config } from '@/web/common/config/config';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Consumer, Kafka, Producer } from 'kafkajs';
 
@@ -18,9 +19,10 @@ export class KafkaService implements OnModuleInit {
   }
 
   async onModuleInit() {
+    const broker = `${Config.kafka.host}:${Config.kafka.port}`;
     const kafka = new Kafka({
       clientId: 'my-app',
-      brokers: ['localhost:9092'],
+      brokers: [broker],
     });
 
     this.producer = kafka.producer();

@@ -13,7 +13,6 @@ const databaseConfig = defineConfig({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   dbName: Config.database.dbName,
-  database: Config.database.dbName,
   entities: ['dist/**/*.aggregate.js', 'dist/**/aggregates/**/*.js'],
   entitiesTs: ['src/**/*.aggregate.ts', 'src/**/aggregates/**/*.ts'],
   debug: !Config.isProduction,

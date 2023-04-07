@@ -23,4 +23,8 @@ export const Config = {
     port: process.env.REDIS_PORT || 6379,
     password: process.env.REDIS_PASSWORD || '',
   },
+  kafka: {
+    host: process.env.KAFKA_HOST || 'localhost',
+    port: process.env.KAFKA_PORT || 9092,
+  },
 } as const;

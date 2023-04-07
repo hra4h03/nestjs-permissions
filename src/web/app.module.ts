@@ -1,4 +1,4 @@
-// import { PrometheusModule } from "@willsoto/nestjs-prometheus";
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 import { MikroORM } from '@mikro-orm/core';
 import { MikroOrmMiddleware, MikroOrmModule } from '@mikro-orm/nestjs';
 import {
@@ -50,7 +50,7 @@ const providers: Provider[] = [
         },
       },
     }),
-    // PrometheusModule.register(),
+    PrometheusModule.register(),
     MikroOrmModule.forRoot(),
     CommonModule,
     MikroOrmModule.forFeature([User]),

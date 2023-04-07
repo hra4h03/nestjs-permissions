@@ -12,7 +12,7 @@
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "pm2-runtime start dist/main.js",
     "migration:create:initial": "mikro-orm migration:create --initial",
     "migration:create": "mikro-orm migration:create",
     "migration:up": "mikro-orm migration:up",
@@ -49,6 +49,7 @@
     "@nestjs/platform-socket.io": "^9.3.2",
     "@nestjs/swagger": "^6.1.4",
     "@nestjs/websockets": "^9.3.2",
+    "@willsoto/nestjs-prometheus": "^5.1.0",
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "dotenv": "^16.0.3",
@@ -58,6 +59,8 @@
     "nestjs-pino": "^3.1.2",
     "nestjs-zod": "^1.2.1",
     "pino-pretty": "^9.1.1",
+    "pm2": "^5.3.0",
+    "prom-client": "^14.2.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.8.0",
@@ -65,6 +68,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@mikro-orm/seeder": "^5.6.15",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",

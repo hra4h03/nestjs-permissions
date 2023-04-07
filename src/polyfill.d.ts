@@ -9,6 +9,8 @@ declare namespace NodeJS {
     REDIS_HOST: string;
     REDIS_PORT: number;
     REDIS_PASSWORD: string;
+    KAFKA_HOST: string;
+    KAFKA_PORT: number;
     PORT: number;
     JWT_SECRET: string;
     ACCESS_TOKEN_EXPIRES: string;
