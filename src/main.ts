@@ -14,7 +14,7 @@ async function bootstrap() {
   const logger = app.get(Logger);
   app.useLogger(logger);
   app.enableCors();
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api');
   app.useGlobalPipes(new ZodValidationPipe());
 
   // app.connectMicroservice(

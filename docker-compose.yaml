@@ -1,15 +1,15 @@
 version: '3.8'
 
 services:
-  application:
+  applications:
+    container_name: permissions
     build:
       context: .
       dockerfile: Dockerfile
     # image: hra4h03/nestjs-build
-    container_name: nestjs-permission
     restart: unless-stopped
     env_file:
-      - .env
+      - .env.production
     ports:
       - 3000:3000
     networks:

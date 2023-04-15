@@ -1,0 +1,47 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "shard01",
+      "group": "shards",
+      "database": "postgres",
+      "username": "postgres",
+      "password": "P@ssw0rd"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "shard02",
+      "group": "shards",
+      "database": "postgres",
+      "username": "postgres",
+      "password": "P@ssw0rd"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "shard03",
+      "group": "shards",
+      "database": "postgres",
+      "username": "postgres",
+      "password": "P@ssw0rd"
+    },
+    {
+      "previewLimit": 50,
+      "server": "127.0.0.1",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "microservice",
+      "database": "nestjs_build",
+      "username": "postgres",
+      "password": "P@ssw0rd"
+    }
+  ]
+}
