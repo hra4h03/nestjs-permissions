@@ -5,8 +5,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Role } from '@aggregates/user/role/role';
 import { User } from '@aggregates/user/user.aggregate';
-import { JwtGuard } from '@/auth/guards/JwtGuard';
-// import { Config } from '@/web/common/config/config';
+import { JwtGuard } from 'src/auth/guards/JwtGuard';
+// import { Config } from 'src/web/common/config/config';
 import * as dotenv from 'dotenv';
 
 dotenv.config({

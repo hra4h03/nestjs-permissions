@@ -1,5 +1,5 @@
-import { GetAuditableDto } from '@/web/dtos/common/autitable.dto';
-import { GetRoleDto } from '@/web/dtos/user/role.dto';
+import { GetAuditableDto } from 'src/web/dtos/common/autitable.dto';
+import { GetRoleDto } from 'src/web/dtos/user/role.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
 

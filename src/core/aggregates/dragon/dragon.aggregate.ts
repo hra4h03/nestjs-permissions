@@ -8,10 +8,11 @@ import {
   Property,
 } from '@mikro-orm/core';
 
-import { DragonAlreadyDeadException } from '../../errors/DragonAlreadyDead.exception';
+import { DragonAlreadyDeadError } from '../../errors/DragonAlreadyDead.error';
 import { Auditable, Writeable } from '../../primitives/base.entity';
 import { Hero } from '../hero/hero.aggregate';
 import { Transform } from 'class-transformer';
+import { Result } from '@/common/primitives/Result';
 
 export enum DragonStatus {
   ALIVE,
@@ -49,9 +50,12 @@ export class Dragon extends BaseEntity<Dragon, 'id'> {
   @Transform(({ value }) => value.toArray())
   public readonly killedBy?: Hero;
 
-  public die(this: Writeable<Dragon>) {
-    if (this.status === DragonStatus.DEAD)
-      throw new DragonAlreadyDeadException(this.id);
+  public die(this: Writeable<Dragon>): Result<true, DragonAlreadyDeadError> {
+    if (this.status === DragonStatus.DEAD) {
+      return Result.fail(new DragonAlreadyDeadError(this.id));
+    }
+
     this.status = DragonStatus.DEAD;
+    return Result.ok(true);
   }
 }

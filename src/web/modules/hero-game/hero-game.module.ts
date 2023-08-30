@@ -6,9 +6,9 @@ import { Hero } from '@aggregates/hero/hero.aggregate';
 import { UserGateway } from './user.gateway';
 import { HeroGameService } from './hero-game.service';
 import { HeroGameController } from './hero-game.controller';
-import { AuthModule } from '@/auth/auth.module';
+import { AuthModule } from 'src/auth/auth.module';
 import { User } from '@aggregates/user/user.aggregate';
-import { CommonModule } from '@/web/common/common.module';
+import { CommonModule } from 'src/web/common/common.module';
 
 @Module({
   imports: [

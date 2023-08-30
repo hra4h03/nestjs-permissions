@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import Redis from 'ioredis';
-import { Config } from '@/web/common/config/config';
+import { Config } from 'src/web/common/config/config';
 
 @Injectable()
 export class RedisPubSubService implements OnModuleInit {
@@ -20,15 +20,15 @@ export class RedisPubSubService implements OnModuleInit {
     this.logger.log(
       `Connecting to redis-pub-sub at ${Config.redis.host}:${Config.redis.port}`,
     );
-    this.sub = new Redis({
-      host: Config.redis.host,
-      port: Config.redis.port,
-      password: Config.redis.password,
-    });
-    this.pub = new Redis({
-      host: Config.redis.host,
-      port: Config.redis.port,
-      password: Config.redis.password,
-    });
+    // this.sub = new Redis({
+    //   host: Config.redis.host,
+    //   port: Config.redis.port,
+    //   password: Config.redis.password,
+    // });
+    // this.pub = new Redis({
+    //   host: Config.redis.host,
+    //   port: Config.redis.port,
+    //   password: Config.redis.password,
+    // });
   }
 }

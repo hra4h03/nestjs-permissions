@@ -2,7 +2,8 @@ import { LoadStrategy } from '@mikro-orm/core';
 import { defineConfig } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { SqlHighlighter } from '@mikro-orm/sql-highlighter';
-import { Config } from '@/web/common/config/config';
+import { Config } from '../web/common/config/config';
+import { OutboxSubscriber } from 'src/common/subscriber/outbox.subscriber';
 
 const databaseConfig = defineConfig({
   host: Config.database.host,
@@ -25,6 +26,7 @@ const databaseConfig = defineConfig({
     path: 'dist/db/migrations',
     pathTs: 'src/db/migrations',
   },
+  subscribers: [new OutboxSubscriber()],
   seeder: {
     path: 'dist/db/seeds',
     pathTs: 'src/db/seeds',

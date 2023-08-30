@@ -1,4 +1,4 @@
-import { PermissionEnum } from '@/core/aggregates/user/permission/permission';
+import { PermissionEnum } from 'src/core/aggregates/user/permission/permission';
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 

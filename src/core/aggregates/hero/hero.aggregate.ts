@@ -1,16 +1,18 @@
+import { AggregateRoot } from '@/common/aggregate/AggregateRoot';
+import { Result } from '@/common/primitives/Result';
+import { DragonAlreadyDeadError } from '@/core/errors/DragonAlreadyDead.error';
+import { DragonKilledEvent } from '@/core/events/dragonKilled.event';
 import {
-  BaseEntity,
   Check,
   Collection,
   Embedded,
   Entity,
   Filter,
   OneToMany,
-  PrimaryKey,
   Property,
   Unique,
+  UnitOfWork,
 } from '@mikro-orm/core';
-
 import { Auditable, Writeable } from '../../primitives/base.entity';
 import { Dragon } from '../dragon/dragon.aggregate';
 
@@ -26,10 +28,7 @@ import { Dragon } from '../dragon/dragon.aggregate';
 @Unique<Hero>({ properties: ['name'] })
 @Check<Hero>({ expression: (columns) => `${columns.skill} >= 0` })
 @Entity()
-export class Hero extends BaseEntity<Hero, 'id'> {
-  @PrimaryKey({ autoincrement: true, primary: true })
-  public readonly id: number;
-
+export class Hero extends AggregateRoot {
   @Property()
   public readonly name: string;
 
@@ -47,15 +46,19 @@ export class Hero extends BaseEntity<Hero, 'id'> {
   @Property()
   public readonly killedDragonsCount: number = this.killedDragons.count();
 
-  public async killDragon(this: Writeable<Hero>, dragon: Dragon) {
-    dragon.die();
-    this.killedDragons.add(dragon);
-    this.killedDragonsCount = await this.killedDragons.loadCount();
-    this.increaseSkill();
-  }
+  public async killDragon(
+    this: Writeable<Hero>,
+    dragon: Dragon,
+  ): Promise<Result<any, DragonAlreadyDeadError>> {
+    const dieResult = dragon.die();
+    if (dieResult.isFailure) {
+      return dieResult;
+    }
 
-  public increaseSkill(this: Writeable<Hero>): Hero {
+    this.killedDragons.add(dragon);
     this.skill += 5;
-    return this;
+
+    this.raiseDomainEvent(new DragonKilledEvent(this.id, dragon.id));
+    return Result.ok();
   }
 }

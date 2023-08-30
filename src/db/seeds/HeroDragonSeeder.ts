@@ -1,7 +1,7 @@
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { HeroFactory } from '@/db/factories/hero.factory';
-import { DragonFactory } from '@/db/factories/dragon.factory';
+import { HeroFactory } from 'src/db/factories/hero.factory';
+import { DragonFactory } from 'src/db/factories/dragon.factory';
 import { zip } from 'lodash';
 
 export class HeroDragonSeeder extends Seeder {

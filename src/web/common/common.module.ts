@@ -5,9 +5,10 @@ import { User } from '@aggregates/user/user.aggregate';
 import { Permission } from '@aggregates/user/permission/permission';
 import { ClaimFactory } from './claim/claim.factory';
 import { PoliciesGuard } from './guards/PoliciesGuard';
-import { RedisPubSubService } from '@/web/common/services/redis-pub-sub.service';
-import { KafkaService } from '@/web/common/services/kafka.service';
-import { RedisSortedSetService } from '@/web/common/services/redis-sorted-set.service';
+import { RedisPubSubService } from 'src/web/common/services/redis-pub-sub.service';
+import { KafkaService } from 'src/web/common/services/kafka.service';
+import { RedisSortedSetService } from 'src/web/common/services/redis-sorted-set.service';
+import { MetricsController } from 'src/web/common/metrics/metrics.controller';
 
 @Module({
   imports: [MikroOrmModule.forFeature([User, Permission])],
@@ -25,5 +26,6 @@ import { RedisSortedSetService } from '@/web/common/services/redis-sorted-set.se
     RedisSortedSetService,
     KafkaService,
   ],
+  controllers: [MetricsController],
 })
 export class CommonModule {}

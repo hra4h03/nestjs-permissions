@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import Redis from 'ioredis';
-import { Config } from '@/web/common/config/config';
+import { Config } from 'src/web/common/config/config';
 
 @Injectable()
 export class RedisSortedSetService implements OnModuleInit {
@@ -16,10 +16,10 @@ export class RedisSortedSetService implements OnModuleInit {
       `Connecting to redis-sorted-set at ${Config.redis.host}:${Config.redis.port}`,
     );
 
-    this.redis = new Redis({
-      host: Config.redis.host,
-      port: Config.redis.port,
-      password: Config.redis.password,
-    });
+    // this.redis = new Redis({
+    //   host: Config.redis.host,
+    //   port: Config.redis.port,
+    //   password: Config.redis.password,
+    // });
   }
 }

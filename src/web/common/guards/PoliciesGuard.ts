@@ -9,7 +9,7 @@ import { Reflector } from '@nestjs/core';
 import { AppAbility, ClaimFactory } from '../claim/claim.factory';
 import { CHECK_POLICIES_KEY, PolicyHandler } from './PoliciesMetadata';
 import { EntityManager } from '@mikro-orm/postgresql';
-import { RequestWithUser } from '@/auth/guards/JwtGuard';
+import { RequestWithUser } from 'src/auth/guards/JwtGuard';
 
 @Injectable()
 export class PoliciesGuard implements CanActivate {

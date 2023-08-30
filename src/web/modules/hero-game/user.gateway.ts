@@ -6,7 +6,7 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { RedisPubSubService } from '@/web/common/services/redis-pub-sub.service';
+import { RedisPubSubService } from 'src/web/common/services/redis-pub-sub.service';
 import { User } from '@aggregates/user/user.aggregate';
 
 @WebSocketGateway({ transport: ['websocket'] })

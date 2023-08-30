@@ -1,23 +1,25 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
+  NotFoundException,
   ParseIntPipe,
   Post,
   Query,
 } from '@nestjs/common';
 import { ApiBody, ApiOkResponse } from '@nestjs/swagger';
-import { GetHeroResponseDto } from '@/web/dtos/hero-game/hero.dto';
-import { GetDragonDto } from '@/web/dtos/hero-game/dragon.dto';
-import { HeroGameService } from '@/web/modules/hero-game/hero-game.service';
-import { KillDragonRequest } from '@/web/dtos/hero-game/kill-dragon.request.dto';
-import { CreateDragon } from '@/web/dtos/hero-game/dragon/create.dragon';
-import { RequestWithUser } from '@/auth/guards/JwtGuard';
-import { CurrentUser } from '@/auth/guards/CurrentUser';
-import { CheckPolicies } from '@/web/common/guards/PoliciesMetadata';
-import { Serialize } from '@/web/common/interceptors/serialize.interceptor';
-import { catchError } from 'rxjs';
-import { ApiController } from '@/web/base.controller';
+import { CurrentUser } from 'src/auth/guards/CurrentUser';
+import { RequestWithUser } from 'src/auth/guards/JwtGuard';
+import { ApiController } from 'src/web/base.controller';
+import { CheckPolicies } from 'src/web/common/guards/PoliciesMetadata';
+import { Serialize } from 'src/web/common/interceptors/serialize.interceptor';
+import { GetDragonDto } from 'src/web/dtos/hero-game/dragon.dto';
+import { CreateDragon } from 'src/web/dtos/hero-game/dragon/create.dragon';
+import { GetHeroResponseDto } from 'src/web/dtos/hero-game/hero.dto';
+import { KillDragonRequest } from 'src/web/dtos/hero-game/kill-dragon.request.dto';
+import { HeroGameService } from 'src/web/modules/hero-game/hero-game.service';
+import { match } from 'ts-pattern';
 
 // @UseGuards(JwtGuard, PoliciesGuard)
 @Controller('hero-game')
@@ -60,12 +62,24 @@ export class HeroGameController extends ApiController {
   @ApiOkResponse({ type: Boolean })
   @ApiBody({ schema: KillDragonRequest.OpenApi })
   async killDragon(@Body() killDragonRequestDto: KillDragonRequest.Dto) {
-    return this.heroGameService
-      .killDragon(killDragonRequestDto.heroId, killDragonRequestDto.dragonId)
-      .pipe(
-        catchError((error) => {
-          return this.wrapError(error);
-        }),
-      );
+    const result = await this.heroGameService.killDragon(
+      killDragonRequestDto.heroId,
+      killDragonRequestDto.dragonId,
+    );
+
+    if (result.isFailure) {
+      return match(result.error)
+        .with({ type: 'DragonAlreadyDeadError' }, (error) => {
+          const ex = new BadRequestException(error.message, { cause: error });
+          return this.wrapError(ex);
+        })
+        .with({ type: 'NotFoundError' }, (error) => {
+          const ex = new NotFoundException(error.message, { cause: error });
+          return this.wrapError(ex);
+        })
+        .exhaustive();
+    }
+
+    return result.unwrap();
   }
 }

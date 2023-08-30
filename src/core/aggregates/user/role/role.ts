@@ -10,7 +10,7 @@ import {
 } from '@mikro-orm/core';
 
 import { Permission } from '../permission/permission';
-import { Writeable } from '@/core/primitives/base.entity';
+import { Writeable } from 'src/core/primitives/base.entity';
 
 @Entity()
 @Unique<Role>({ properties: ['name'] })

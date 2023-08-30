@@ -1,7 +1,7 @@
 import type { EntityManager } from '@mikro-orm/core';
 import { Seeder } from '@mikro-orm/seeder';
-import { HeroDragonSeeder } from '@/db/seeds/HeroDragonSeeder';
-import { UserSeeder } from '@/db/seeds/UserSeeder';
+import { HeroDragonSeeder } from 'src/db/seeds/HeroDragonSeeder';
+import { UserSeeder } from 'src/db/seeds/UserSeeder';
 
 export class DatabaseSeeder extends Seeder {
   async run(em: EntityManager): Promise<void> {

@@ -1,5 +1,5 @@
-import { Config } from '@/web/common/config/config';
 import { Client, Transport } from '@nestjs/microservices';
+import { Config } from '../config/config';
 
 export function RedisPubSubClient() {
   return Client({
